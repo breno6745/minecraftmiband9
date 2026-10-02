@@ -1,4 +1,0 @@
-<script>
-// App entry. Nothing global is needed; each page keeps its own state.
-export default {}
-</script>
