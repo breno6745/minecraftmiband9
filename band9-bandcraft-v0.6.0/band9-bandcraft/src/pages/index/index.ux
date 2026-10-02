@@ -1,0 +1,24 @@
+<template>
+  <!-- MENU PAGE: full-screen menu picture + one invisible button over the "Play" button -->
+  <div class="page">
+    <image class="menuImage" src="/common/generated/menu.png"></image>
+    <div class="playHit" onclick="start"></div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  start: function () {
+    router.push({ uri: '/pages/game' })
+  }
+}
+</script>
+
+<style>
+.page{width:192px;height:490px;position:relative;overflow:hidden;background-color:#6bb6f8;}
+.menuImage{position:absolute;left:0px;top:0px;width:192px;height:490px;}
+/* position of the invisible Play button (matches the art in menu.png) */
+.playHit{position:absolute;left:35px;top:220px;width:122px;height:56px;}
+</style>

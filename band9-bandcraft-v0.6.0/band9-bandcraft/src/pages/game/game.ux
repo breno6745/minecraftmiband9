@@ -1,0 +1,294 @@
+<template>
+  <div class="page">
+    <!-- 1) background: sky, terrain (6x3 blocks, 32px, no gaps), HUD, hotbar, buttons. Made by tools/make_assets.py -->
+    <image class="scene" src="/common/generated/scene0.png" show="{{v0}}"></image>
+    <image class="scene" src="/common/generated/scene1.png" show="{{v1}}"></image>
+    <image class="scene" src="/common/generated/scene2.png" show="{{v2}}"></image>
+    <image class="zombie" src="/common/generated/zombie.png" show="{{v1}}"></image>
+
+    <!-- 2) mined grass blocks (a "hole" is drawn over the grass block of that column) -->
+    <image class="hole hole0" src="/common/generated/hole.png" show="{{h0}}"></image>
+    <image class="hole hole1" src="/common/generated/hole.png" show="{{h1}}"></image>
+    <image class="hole hole2" src="/common/generated/hole.png" show="{{h2}}"></image>
+    <image class="hole hole3" src="/common/generated/hole.png" show="{{h3}}"></image>
+    <image class="hole hole4" src="/common/generated/hole.png" show="{{h4}}"></image>
+    <image class="hole hole5" src="/common/generated/hole.png" show="{{h5}}"></image>
+
+    <!-- 3) placed blocks: 6 columns x 6 block types. Only one is visible per column (flags c<col>t<type>) -->
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-grass.png" show="{{c0t1}}"></image>
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-dirt.png" show="{{c0t2}}"></image>
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-stone.png" show="{{c0t3}}"></image>
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-sand.png" show="{{c0t4}}"></image>
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-planks.png" show="{{c0t5}}"></image>
+    <image class="blk" style="{{pS0}}" src="/common/generated/b-coal.png" show="{{c0t6}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-grass.png" show="{{c1t1}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-dirt.png" show="{{c1t2}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-stone.png" show="{{c1t3}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-sand.png" show="{{c1t4}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-planks.png" show="{{c1t5}}"></image>
+    <image class="blk" style="{{pS1}}" src="/common/generated/b-coal.png" show="{{c1t6}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-grass.png" show="{{c2t1}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-dirt.png" show="{{c2t2}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-stone.png" show="{{c2t3}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-sand.png" show="{{c2t4}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-planks.png" show="{{c2t5}}"></image>
+    <image class="blk" style="{{pS2}}" src="/common/generated/b-coal.png" show="{{c2t6}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-grass.png" show="{{c3t1}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-dirt.png" show="{{c3t2}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-stone.png" show="{{c3t3}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-sand.png" show="{{c3t4}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-planks.png" show="{{c3t5}}"></image>
+    <image class="blk" style="{{pS3}}" src="/common/generated/b-coal.png" show="{{c3t6}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-grass.png" show="{{c4t1}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-dirt.png" show="{{c4t2}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-stone.png" show="{{c4t3}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-sand.png" show="{{c4t4}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-planks.png" show="{{c4t5}}"></image>
+    <image class="blk" style="{{pS4}}" src="/common/generated/b-coal.png" show="{{c4t6}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-grass.png" show="{{c5t1}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-dirt.png" show="{{c5t2}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-stone.png" show="{{c5t3}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-sand.png" show="{{c5t4}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-planks.png" show="{{c5t5}}"></image>
+    <image class="blk" style="{{pS5}}" src="/common/generated/b-coal.png" show="{{c5t6}}"></image>
+
+    <!-- 4) target marker (the block Steve will mine/place on) + Steve (right/left facing) + hotbar selection -->
+    <image class="target" style="{{targetStyle}}" src="/common/generated/target.png"></image>
+    <image class="player" style="{{playerStyle}}" src="/common/generated/steve-r.png" show="{{faceR}}"></image>
+    <image class="player" style="{{playerStyle}}" src="/common/generated/steve-l.png" show="{{faceL}}"></image>
+    <image class="selection" style="{{selectionStyle}}" src="/common/generated/sel.png"></image>
+
+    <!-- 5) invisible touch areas. Walk buttons work while HELD (touchstart/touchend); click is only a fallback -->
+    <div class="hit btnLeft" ontouchstart="leftDown" ontouchend="leftUp" ontouchcancel="leftUp" onclick="leftClick" onlongpress="leftDown"></div>
+    <div class="hit btnJump" ontouchstart="jumpDown" ontouchend="jumpUp" ontouchcancel="jumpUp" onclick="jumpClick"></div>
+    <div class="hit btnRight" ontouchstart="rightDown" ontouchend="rightUp" ontouchcancel="rightUp" onclick="rightClick" onlongpress="rightDown"></div>
+    <div class="hit btnMine" ontouchstart="mineDown" ontouchend="actUp" ontouchcancel="actUp" onclick="mineClick"></div>
+    <div class="hit btnPlace" ontouchstart="placeDown" ontouchend="actUp" ontouchcancel="actUp" onclick="placeClick"></div>
+    <div class="hit btnCraft" onclick="openCraft"></div>
+    <div class="slotHit slot0" onclick="select0"></div>
+    <div class="slotHit slot1" onclick="select1"></div>
+    <div class="slotHit slot2" onclick="select2"></div>
+    <div class="slotHit slot3" onclick="select3"></div>
+    <div class="slotHit slot4" onclick="select4"></div>
+    <div class="slotHit slot5" onclick="select5"></div>
+    <div class="slotHit slot6" onclick="select6"></div>
+    <div class="slotHit slot7" onclick="select7"></div>
+
+    <!-- 6) crafting panel (drawn on top of everything while open) -->
+    <image class="craft" src="/common/generated/craft.png" show="{{craftOpen}}"></image>
+    <div class="craftClose" onclick="closeCraft" show="{{craftOpen}}"></div>
+  </div>
+</template>
+
+<script>
+// =====================================================================================
+//  CONFIG  -  safe numbers to tweak by hand
+// =====================================================================================
+var TICK_MS   = 55;     // game loop interval (ms)
+var WALK_STEP = 2;      // px per tick while a walk button is held. 2px/55ms ~ 36px/s. LOWER = slower Steve
+var NUDGE     = 6;      // px moved by a plain tap if the device sends no touch events
+var GRAVITY   = 1.1;    // px per tick^2
+var JUMP_V    = -8.8;   // jump speed (peak height ~ 1 block). Bigger negative = higher jump
+var STEP_UP   = 34;     // Steve climbs blocks up to this height automatically
+var REPEAT    = 5;      // while MINE/PLACE is held, repeat every N ticks
+var SCREENS   = 40;     // world size = SCREENS screens of 6 blocks each (walk past the edge -> next screen)
+var START_SCREEN = 20;  // Steve starts in the middle, so you can walk both ways
+// look of each screen: 0 = plains, 1 = forest (+zombie), 2 = desert. Repeats every 8 screens. Edit freely.
+var LOOK = [0, 1, 0, 2, 0, 1, 1, 2];
+
+// =====================================================================================
+//  LAYOUT  -  must match tools/make_assets.py
+// =====================================================================================
+var BLOCK = 32, COLS = 6, SURFACE_Y = 186;      // grass row top; Steve's feet stand here
+var PLAYER_W = 24, PLAYER_H = 60;
+var SCREEN_W = 192;
+var SLOT_X = [8, 54, 100, 146], SLOT_Y = [290, 334];
+
+// =====================================================================================
+//  GAME STATE (plain variables, copied to the screen by render())
+// =====================================================================================
+var screen = START_SCREEN;   // which 6-block screen of the world is visible
+var px = 56;                 // Steve's left edge (inside the current screen)
+var feet = SURFACE_Y;        // Steve's feet (y)
+var vy = 0, grounded = true;
+var dir = 0;                 // -1 / 1 while a walk button is held, 0 = stopped
+var facing = 1;
+var timer = 0;
+var tickNo = 0;
+var touchSeen = false;       // true once the device has sent a touch event
+var jumpHeld = false;        // jump button held -> keeps jumping
+var actHeld = '';            // '' | 'mine' | 'place' while that button is held
+var selected = 0;            // hotbar slot 0..7  (slots 0..5 are placeable blocks)
+// the whole world, one entry per block column (index = screen * 6 + column in screen)
+var holes = [], placed = [];   // holes: 1 = surface block mined.  placed: 0 = nothing, 1..6 = grass, dirt, stone, sand, planks, coal
+for (var w = 0; w < SCREENS * COLS; w++) { holes.push(0); placed.push(0) }
+
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)) }
+function colAt(x) { return clamp(Math.floor(x / BLOCK), 0, COLS - 1) }
+function wi(c) { return screen * COLS + c }        // world index of a visible column
+// y of the top surface of a visible column (smaller y = higher)
+function topOf(c) {
+  var i = wi(c)
+  if (placed[i] > 0) return holes[i] ? SURFACE_Y : SURFACE_Y - BLOCK
+  return holes[i] ? SURFACE_Y + BLOCK : SURFACE_Y
+}
+function groundUnder(x) { return Math.min(topOf(colAt(x + 4)), topOf(colAt(x + PLAYER_W - 4))) }
+function targetCol() { return colAt(facing > 0 ? px + PLAYER_W + 6 : px - 6) }
+function stopLoop() { if (timer) { clearTimeout(timer); timer = 0 } dir = 0; jumpHeld = false; actHeld = '' }
+
+// private data is built by code so the 36 block flags don't have to be typed
+var DATA = {
+  playerStyle: 'left:56px;top:126px;width:24px;height:60px;',
+  selectionStyle: 'left:6px;top:288px;width:42px;height:42px;',
+  targetStyle: 'left:96px;top:186px;width:32px;height:32px;',
+  craftOpen: false,
+  faceR: true,
+  faceL: false,
+  v0: true, v1: false, v2: false
+}
+for (var c = 0; c < COLS; c++) {
+  DATA['h' + c] = false
+  DATA['pS' + c] = 'left:' + (c * BLOCK) + 'px;top:' + (SURFACE_Y - BLOCK) + 'px;width:32px;height:32px;'
+  for (var t = 1; t <= 6; t++) DATA['c' + c + 't' + t] = false
+}
+
+export default {
+  private: DATA,
+
+  onShow: function () { this.render() },
+  onHide: function () { stopLoop() },
+  onDestroy: function () { stopLoop() },
+
+  // ---- copy the game state to the screen -------------------------------------------
+  render: function () {
+    this.playerStyle = 'left:' + Math.round(px) + 'px;top:' + Math.round(feet - PLAYER_H) + 'px;width:' + PLAYER_W + 'px;height:' + PLAYER_H + 'px;'
+    this.faceR = facing > 0
+    this.faceL = facing < 0
+    var look = LOOK[screen % LOOK.length]
+    this.v0 = look === 0
+    this.v1 = look === 1
+    this.v2 = look === 2
+    var tc = targetCol()
+    this.targetStyle = 'left:' + (tc * BLOCK) + 'px;top:' + topOf(tc) + 'px;width:32px;height:32px;'
+    for (var c = 0; c < COLS; c++) {
+      var i = wi(c)
+      this['h' + c] = holes[i] === 1
+      this['pS' + c] = 'left:' + (c * BLOCK) + 'px;top:' + (holes[i] ? SURFACE_Y : SURFACE_Y - BLOCK) + 'px;width:32px;height:32px;'
+      for (var t = 1; t <= 6; t++) this['c' + c + 't' + t] = placed[i] === t
+    }
+  },
+
+  // ---- game loop (setTimeout chain, runs only while something is moving / held) --------
+  startLoop: function () {
+    if (timer) return
+    this.tick()
+  },
+  tick: function () {
+    var self = this
+    timer = 0
+    tickNo++
+    var moved = false
+    if (dir !== 0) {
+      var nx = px + dir * WALK_STEP
+      if (nx > SCREEN_W - PLAYER_W) {            // walked off the right edge -> next screen
+        if (screen < SCREENS - 1) { screen++; px = 0; moved = true } else px = SCREEN_W - PLAYER_W
+      } else if (nx < 0) {                        // walked off the left edge -> previous screen
+        if (screen > 0) { screen--; px = SCREEN_W - PLAYER_W; moved = true } else px = 0
+      } else if (feet - groundUnder(nx) <= STEP_UP) px = nx
+    }
+    if (jumpHeld && grounded) { vy = JUMP_V; grounded = false }
+    if (actHeld && tickNo % REPEAT === 0) { if (actHeld === 'mine') this.doMine(); else this.doPlace() }
+    var g = groundUnder(px)
+    vy += GRAVITY
+    feet += vy
+    if (feet >= g) { feet = g; vy = 0; grounded = true } else { grounded = false }
+    this.render()
+    if (dir !== 0 || !grounded || jumpHeld || actHeld) timer = setTimeout(function () { self.tick() }, TICK_MS)
+  },
+
+  // ---- walking: HOLD the button (touchstart..touchend) ----------------------------------
+  go: function (d) { dir = d; facing = d; this.startLoop() },
+  leftDown: function () { touchSeen = true; this.go(-1) },
+  leftUp: function () { if (dir === -1) dir = 0 },
+  rightDown: function () { touchSeen = true; this.go(1) },
+  rightUp: function () { if (dir === 1) dir = 0 },
+  // Fallback for devices that send only "click" (no touch events): TAP = start walking, tap the same arrow again = stop.
+  leftClick: function () { if (!touchSeen) { if (dir === -1) dir = 0; else this.go(-1) } },
+  rightClick: function () { if (!touchSeen) { if (dir === 1) dir = 0; else this.go(1) } },
+
+  // ---- jump: hold = keeps jumping --------------------------------------------------------
+  jumpDown: function () { touchSeen = true; jumpHeld = true; this.startLoop() },
+  jumpUp: function () { jumpHeld = false },
+  jumpClick: function () { if (!touchSeen && grounded) { vy = JUMP_V; grounded = false; this.startLoop() } },
+
+  // ---- mine / place on the target block (the one in front of Steve): hold = repeat ---------
+  doMine: function () {
+    var i = wi(targetCol())
+    if (placed[i] > 0) placed[i] = 0
+    else if (holes[i] === 0) holes[i] = 1
+  },
+  doPlace: function () {
+    var i = wi(targetCol())
+    if (selected <= 5 && placed[i] === 0) placed[i] = selected + 1
+  },
+  mineDown: function () { touchSeen = true; this.doMine(); actHeld = 'mine'; this.render(); this.startLoop() },
+  placeDown: function () { touchSeen = true; this.doPlace(); actHeld = 'place'; this.render(); this.startLoop() },
+  actUp: function () { actHeld = '' },
+  mineClick: function () { if (!touchSeen) { this.doMine(); this.render(); this.startLoop() } },
+  placeClick: function () { if (!touchSeen) { this.doPlace(); this.render(); this.startLoop() } },
+
+  // ---- hotbar --------------------------------------------------------------------------
+  setSel: function (n) {
+    selected = n
+    this.selectionStyle = 'left:' + (SLOT_X[n % 4] - 2) + 'px;top:' + (SLOT_Y[Math.floor(n / 4)] - 2) + 'px;width:42px;height:42px;'
+  },
+  select0: function () { this.setSel(0) },
+  select1: function () { this.setSel(1) },
+  select2: function () { this.setSel(2) },
+  select3: function () { this.setSel(3) },
+  select4: function () { this.setSel(4) },
+  select5: function () { this.setSel(5) },
+  select6: function () { this.setSel(6) },
+  select7: function () { this.setSel(7) },
+
+  // ---- crafting panel -------------------------------------------------------------------
+  openCraft: function () { this.craftOpen = true },
+  closeCraft: function () { this.craftOpen = false }
+}
+</script>
+
+<style>
+.page{width:192px;height:490px;position:relative;overflow:hidden;background-color:#92ccff;}
+.scene{position:absolute;left:0px;top:0px;width:192px;height:490px;}
+.zombie{position:absolute;left:150px;top:126px;width:36px;height:60px;z-index:5;}
+.hole{position:absolute;top:186px;width:32px;height:32px;z-index:6;}
+.hole0{left:0px;}
+.hole1{left:32px;}
+.hole2{left:64px;}
+.hole3{left:96px;}
+.hole4{left:128px;}
+.hole5{left:160px;}
+.blk{position:absolute;z-index:7;}
+.target{position:absolute;z-index:8;}
+.player{position:absolute;z-index:10;}
+.selection{position:absolute;z-index:11;}
+.hit{position:absolute;z-index:20;height:48px;width:60px;}
+/* LAYOUT of the touch buttons (same boxes as in scene.png) */
+.btnLeft{left:4px;top:384px;}
+.btnJump{left:66px;top:384px;}
+.btnRight{left:128px;top:384px;}
+.btnMine{left:4px;top:436px;}
+.btnPlace{left:66px;top:436px;}
+.btnCraft{left:128px;top:436px;}
+.slotHit{position:absolute;z-index:20;width:38px;height:38px;}
+.slot0{left:8px;top:290px;}
+.slot1{left:54px;top:290px;}
+.slot2{left:100px;top:290px;}
+.slot3{left:146px;top:290px;}
+.slot4{left:8px;top:334px;}
+.slot5{left:54px;top:334px;}
+.slot6{left:100px;top:334px;}
+.slot7{left:146px;top:334px;}
+.craft{position:absolute;left:8px;top:96px;width:176px;height:140px;z-index:50;}
+.craftClose{position:absolute;left:154px;top:102px;width:26px;height:24px;z-index:51;}
+</style>

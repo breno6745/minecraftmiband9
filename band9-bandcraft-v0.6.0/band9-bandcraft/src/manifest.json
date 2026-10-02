@@ -1,0 +1,33 @@
+{
+  "package": "com.breno.bandcraft.stable",
+  "name": "Minecraft 2D - Mi Band 9",
+  "versionName": "0.6.0",
+  "versionCode": 6,
+  "minPlatformVersion": 1000,
+  "icon": "/common/icon.png",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "system.router"
+    }
+  ],
+  "permissions": [],
+  "config": {
+    "logLevel": "error",
+    "designWidth": "device-width"
+  },
+  "router": {
+    "entry": "pages/index",
+    "pages": {
+      "pages/index": {
+        "component": "index"
+      },
+      "pages/game": {
+        "component": "game"
+      }
+    }
+  },
+  "minAPILevel": 1
+}
